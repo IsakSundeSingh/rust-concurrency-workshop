@@ -3,6 +3,12 @@
 version = 3
 
 [[package]]
+name = "cfg-if"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+
+[[package]]
 name = "part-1"
 version = "0.1.0"
 
@@ -17,3 +23,10 @@ version = "0.1.0"
 [[package]]
 name = "part-4"
 version = "0.1.0"
+
+[[package]]
+name = "part-5"
+version = "0.1.0"
+dependencies = [
+ "cfg-if",
+]

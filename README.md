@@ -187,3 +187,71 @@ As for the explanation of `Arc<Mutex<bool>>`:
 > If you tried figuring this part out on your own, I hope the one thing you're left with is that Rust truly backs you up! Consider how many languages would not give you _any_ warning where Rust refused to compile your code because of bugs. It truly enables _fearless concurrency_.
 
 </details>
+
+---
+
+## Part 5: concurrent computations
+
+An important thing to note is that `async` as in the keyword `async`-code and threads are _not_ the same. There is debate on what the best description is, but an _async_ task is an asynchronous unit of computation, which can itself be executed in a number of ways, where one of them is on a thread, or perhaps executed on another thread than where it was created.
+
+Confusing? Well, it kind of is, because it _is_ more complicated than it usually is explained. As a rule of thumb, things can be split into two parts:
+
+- Use `async` tasks when you need to wait on I/O-devices and operations. E.g. network requests, filesystem accesses for larger files, etc. Small file reads may be fine to use blocking operations on depending on your application (whether it can actually do meaningful work before the file is read, etc.). It depends on the situation.
+- Use threads when you need to perform CPU-bound computations in parallel. However, spawning a new process may also be a solution.
+
+You can of course combine these with both async tasks and threads, and e.g. writing web-servers usually do as such!
+
+### Problem description
+
+Imagine we're doing a computationally heavy processing problem. We have a function `compute` that accepts some `Data` and spits out a `ComputationResult`. The load is non-constant depending on `Data`, e.g. `data_1` may take shorter to compute than `data_2`, as it tends to do in reality as well.
+
+Use threads to parallelize the computation of the data and speed up the overall runtime in wall-clock time (fewer seconds is better). Implement the function `parallel_calculate` which will be compared to the `serial_calculate` in the tests. The tests pass when `parallel_calculate` executes quicker than `serial_calculate` and provides the same results.
+
+> [!TIP]
+> Running the program also outputs how fast the two versions are compared to each other.
+
+> [!NOTE]
+> This exercise can probably be done in quite a few ways, so don't worry if you don't implement it the same way as the solution suggests. Just making it faster is good enough!
+
+<details>
+<summary>
+Summary
+</summary>
+
+One can implement the parallel calculation as follows:
+
+```rust
+fn parallel_calculate(data: Vec<Data>) -> Vec<ComputationResult> {
+    // A simple way to do this is to blindly spawn one thread per element to be computed.
+    // This will probably not work in practice if there are a lot of elements.
+    // It will also definitely _not_ be the fastest way to do it.
+    // E.g. consider when one thread uses 100 ms to finish and another 10s,
+    // that is 99 % of the execution time for the first thread wasted, when
+    // it could have picked a new piece of data to compute.
+    // We will look at faster methods later.
+
+    // This also blindly assumes we can spawn one thread per core.
+    // If num threads >> num cores then this will be a lot slower.
+    // A smarter way could be to use `std::thread::available_parallelism()`
+    // to get the number of parallel resources (cores), and spawn that number of
+    // threads, chunking the data up into that amount.
+
+    let mut handles = Vec::new();
+    // Use for loop explicitly to avoid lazy iterators
+    for datum in data {
+        handles.push(std::thread::spawn(|| calculate(datum)))
+    }
+
+    // Now that the threads have been spawned and started computing,
+    // we can lazily collect them. Though it is not the most efficient.
+    // E.g. if thread 4 completes before threads 1-3, we will wait a longer
+    // time for it to complete.
+    let results = handles.into_iter().map(|x| x.join().unwrap());
+
+    results.collect()
+}
+```
+
+As noted, there are many ways to implement this, just try to make the test pass. I at least think this is the simplest way to make the test pass in our scenario with this input data set.
+
+</details>
