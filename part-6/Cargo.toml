@@ -1,10 +1,10 @@
 [package]
-name = "part-5"
+name = "part-6"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-cfg-if = "1.0.0"
 common = { path = "../common" }
+part-5 = { path = "../part-5" }

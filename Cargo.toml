@@ -3,5 +3,5 @@
 # we want to compile separately.
 
 [workspace]
-members = ["part-*"]
+members = ["common", "part-*"]
 resolver = "2"

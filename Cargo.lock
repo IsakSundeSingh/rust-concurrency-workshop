@@ -9,6 +9,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "common"
+version = "0.1.0"
+
+[[package]]
 name = "part-1"
 version = "0.1.0"
 
@@ -29,4 +33,13 @@ name = "part-5"
 version = "0.1.0"
 dependencies = [
  "cfg-if",
+ "common",
+]
+
+[[package]]
+name = "part-6"
+version = "0.1.0"
+dependencies = [
+ "common",
+ "part-5",
 ]
