@@ -3,5 +3,13 @@
 version = 3
 
 [[package]]
-name = "concurrency-workshop"
+name = "part-1"
+version = "0.1.0"
+
+[[package]]
+name = "part-2"
+version = "0.1.0"
+
+[[package]]
+name = "part-3"
 version = "0.1.0"
