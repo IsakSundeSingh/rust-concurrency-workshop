@@ -7,7 +7,7 @@ pub struct Data(pub u64);
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ComputationResult(pub u64);
 
-fn calculate(datum: Data) -> ComputationResult {
+pub fn calculate(datum: Data) -> ComputationResult {
     // Make calculations faster in test :p
     cfg_if! { if #[cfg(test)] { fn x() -> u64 { 100 } } else { fn x() -> u64 { 500 } } };
     let compute_time = x();

@@ -205,7 +205,7 @@ You can of course combine these with both async tasks and threads, and e.g. writ
 
 Imagine we're doing a computationally heavy processing problem. We have a function `compute` that accepts some `Data` and spits out a `ComputationResult`. The load is non-constant depending on `Data`, e.g. `data_1` may take shorter to compute than `data_2`, as it tends to do in reality as well.
 
-Use threads to parallelize the computation of the data and speed up the overall runtime in wall-clock time (fewer seconds is better). Implement the function `parallel_calculate` which will be compared to the `serial_calculate` in the tests. The tests pass when `parallel_calculate` executes quicker than `serial_calculate` and provides the same results.
+Use threads to parallelize the computation of the data and speed up the overall runtime in wall-clock time (fewer seconds is better). Implement the function `parallel_calculate` in [part-5/src/lib.rs](./part-5/src/lib.rs) which will be compared to the `serial_calculate` in the tests. The tests pass when `parallel_calculate` executes quicker than `serial_calculate` and provides the same results.
 
 > [!TIP]
 > Running the program also outputs how fast the two versions are compared to each other.
@@ -255,3 +255,57 @@ fn parallel_calculate(data: Vec<Data>) -> Vec<ComputationResult> {
 As noted, there are many ways to implement this, just try to make the test pass. I at least think this is the simplest way to make the test pass in our scenario with this input data set.
 
 </details>
+
+---
+
+## Part 6: simplifying parallel computations
+
+As you probably saw in the solution for the previous exercise, there are several edge cases that may impact performance, and the implementation is probably not the best for all situations.
+
+Imagine a scenario where execution time for processing the different data inputs varies a lot more. E.g. thread 1 might spend 10 seconds processing data part 1, while thread 2 spends 1 second executing data part 2.
+
+We will use the excellent library [rayon](https://docs.rs/rayon/latest/rayon/) to parallelize our workload and compare it against the previous solution. Rayon uses a work-stealing scheduler at runtime which
+
+Implement the `parallel_calculate` in [part-6/src/main.rs](./part-6/src/main.rs) using Rayon's parallel iterator primitives to speed up the execution. The provided tests will test both a smaller dataset and a larger one.
+
+> [!TIP]
+> It's super easy!
+
+> [!TIP]
+> Concurrency is kind of flaky, so try running tests with `cargo test --release -p part-6` to see if they perform better.
+
+> [!CAUTION]
+> Did the tests fail? Is your implementation from part 5 consistently faster than Rayon's? Wow! Great work!
+>
+> You probably just have a better implementation, or more likely: The dataset is too small for the benefit of Rayon to show.
+> Rayon adds some overhead to implement the work-stealing, so it might only be useful on different workloads.
+> This is why profiling is necessary!
+>
+> Anyway, I hope you see the usefulness of Rayon, nonetheless 😅
+
+<details>
+<summary>
+Summary
+</summary>
+
+The rayon implementation can be as simple as this:
+
+```rust
+fn rayon_parallel_calculate(data: Vec<Data>) -> Vec<ComputationResult> {
+    // Use the rayon prelude and use the same calculate-method as before
+    use part_5::calculate;
+    use rayon::prelude::*;
+
+    data.into_par_iter().map(calculate).collect()
+}
+```
+
+Rayon implements `ParallelIterator` which mimics the regular `Iterator`-API. Check out [their documentation](https://docs.rs/rayon/latest/rayon/iter/index.html) for more info!
+
+</details>
+
+---
+
+## Conclusion
+
+I hope you learned that concurrency and parallelism in Rust is quite easy! Want to parallelize some computations? Slap on Rayon! Want to spawn a worker thread that does something and messages back some data here and there? Use channels (mpsc)!

@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 common = { path = "../common" }
 part-5 = { path = "../part-5" }
+rayon = "1.10.0"
+serial_test = "3.0.0"
