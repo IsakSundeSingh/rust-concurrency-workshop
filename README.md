@@ -175,7 +175,7 @@ fn assignment(x: Arc<Mutex<bool>>) {
 As for the explanation of `Arc<Mutex<bool>>`:
 
 - `bool: Send + Sync`, but you can't share the state mutably, only clone/copy it. Ownership and borrows cannot be asserted across thread boundaries deterministically so the compiler doesn't let us share it mutably.
-- `Mutex<bool>: Send + Sync`, but you can't share the state mutably, for the same reasons as above.
+- `Mutex<bool>: Send + Sync`, but you can't share the state mutably, for the same reasons as above. Makes the value inside safe to mutate across threads. Also makes a `T: !Sync!` `Sync`.
 - `Rc<Mutex<bool>>: !Send + !Sync` (RC = reference count) allows multiple owners of the value to share it mutably on a single thread by runtime reference counting, deallocating the value when the count reaches 0. However, it is itself not shareable across threads. This is because the RC keeps a count on how many borrows it has at runtime, and that count is subject to data races (RAW, WAR, WAW).
 - `Arc<Mutex<bool>>: Send + Sync` Arc = atomic reference counting. It is the same as the `Rc`-type, but keeps an atomic count which atomically updates the count (a CPU-level instruction prohibits data races at the cost of a higher runtime cost). This means we can cheaply clone an `Arc` and pass that to another thread. Cloning an `Arc` just increases a counter and copies a pointer to the data within. The mutex inside it provides ownership guarantees across threads because of the lock.
 
@@ -185,6 +185,9 @@ As for the explanation of `Arc<Mutex<bool>>`:
 > Difficult? Hopefully not too much. In _most_ cases, sharing state across threads mutably is as easy as using `Arc<Mutex<T>>`, which has an easy interface. The only thing you need to worry about are deadlocks such as when you have more than one lock to acquire, e.g. thread one acquires `Arc<Mutex<T>`
 >
 > If you tried figuring this part out on your own, I hope the one thing you're left with is that Rust truly backs you up! Consider how many languages would not give you _any_ warning where Rust refused to compile your code because of bugs. It truly enables _fearless concurrency_.
+
+> ![TIP]
+> Read [Arc and Mutex in Rust](https://itsallaboutthebit.com/arc-mutex/) for a more thorough explanation.
 
 </details>
 
