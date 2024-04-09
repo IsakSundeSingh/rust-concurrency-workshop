@@ -27,24 +27,24 @@ jobs:
       - name: Copy images directory (if exists)
         run: if [[ -d img ]]; then cp -R img build/img; fi
 
-      - name: Marp Build (Intro)
+      - name: Marp Build (Concurrency)
         uses: docker://marpteam/marp-cli:v3.0.2
         with:
-          args: Intro.md -o build/index.html
+          args: Concurrency.md -o build/index.html
         env:
           MARP_USER: root:root
 
-      - name: Marp Build (Intro.pdf)
+      - name: Marp Build (Concurrency.pdf)
         uses: docker://marpteam/marp-cli:v3.0.2
         with:
-          args: Intro.md --allow-local-files -o build/Intro.pdf
+          args: Concurrency.md --allow-local-files -o build/Concurrency.pdf
         env:
           MARP_USER: root:root
 
-      - name: Marp Build (Intro.pptx)
+      - name: Marp Build (Concurrency.pptx)
         uses: docker://marpteam/marp-cli:v3.0.2
         with:
-          args: Intro.md --allow-local-files -o build/Intro.pptx
+          args: Concurrency.md --allow-local-files -o build/Concurrency.pptx
         env:
           MARP_USER: root:root
 
