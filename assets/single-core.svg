@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="264" height="80" class="svgbob"><style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+    stroke: black;
+    stroke-width: 2;
+    stroke-opacity: 1;
+    fill-opacity: 1;
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+}
+.svgbob text {
+    white-space: pre;
+    fill: black;
+    font-family: Iosevka Fixed, monospace;
+    font-size: 14px;
+}
+.svgbob rect.backdrop {
+    stroke: none;
+    fill: transparent;
+}
+.svgbob .broken {
+    stroke-dasharray: 8;
+}
+.svgbob .filled {
+    fill: black;
+}
+.svgbob .bg_filled {
+    fill: white;
+    stroke-width: 1;
+}
+.svgbob .nofill {
+    fill: white;
+}
+.svgbob .end_marked_arrow {
+    marker-end: url(#arrow);
+}
+.svgbob .start_marked_arrow {
+    marker-start: url(#arrow);
+}
+.svgbob .end_marked_diamond {
+    marker-end: url(#diamond);
+}
+.svgbob .start_marked_diamond {
+    marker-start: url(#diamond);
+}
+.svgbob .end_marked_circle {
+    marker-end: url(#circle);
+}
+.svgbob .start_marked_circle {
+    marker-start: url(#circle);
+}
+.svgbob .end_marked_open_circle {
+    marker-end: url(#open_circle);
+}
+.svgbob .start_marked_open_circle {
+    marker-start: url(#open_circle);
+}
+.svgbob .end_marked_big_open_circle {
+    marker-end: url(#big_open_circle);
+}
+.svgbob .start_marked_big_open_circle {
+    marker-start: url(#big_open_circle);
+}<!--separator--></style><defs><marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><polygon points="0,0 0,4 4,2 0,0"></polygon></marker><marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><polygon points="0,2 2,0 4,2 2,4 0,2"></polygon></marker><marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><circle cx="4" cy="4" r="2" class="filled"></circle></marker><marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><circle cx="4" cy="4" r="2" class="bg_filled"></circle></marker><marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><circle cx="4" cy="4" r="3" class="bg_filled"></circle></marker></defs><rect class="backdrop" x="0" y="0" width="264" height="80"></rect><text x="34" y="28" >1.</text><text x="2" y="44" >Core:</text><text x="34" y="60" >2.</text><text x="58" y="28" >P</text><text x="162" y="28" >P</text><polygon points="248,36 256,40 248,44" class="filled"></polygon><text x="114" y="60" >P</text><text x="218" y="60" >P</text><g><line x1="104" y1="24" x2="112" y2="24" class="solid"></line><path d="M 112,24 A 4,4 0,0,1 116,28" class="nofill"></path><line x1="116" y1="28" x2="116" y2="36" class="solid"></line><path d="M 116,36 A 4,4 0,0,0 120,40" class="nofill"></path><line x1="120" y1="40" x2="144" y2="40" class="solid"></line><path d="M 152,24 A 4,4 0,0,0 148,28" class="nofill"></path><line x1="148" y1="28" x2="148" y2="36" class="solid"></line><line x1="152" y1="24" x2="160" y2="24" class="solid"></line><path d="M 148,36 A 4,4 0,0,1 144,40" class="nofill"></path></g><g><line x1="208" y1="24" x2="216" y2="24" class="solid"></line><path d="M 216,24 A 4,4 0,0,1 220,28" class="nofill"></path><line x1="220" y1="28" x2="220" y2="36" class="solid"></line><path d="M 220,36 A 4,4 0,0,0 224,40" class="nofill"></path><line x1="224" y1="40" x2="248" y2="40" class="solid"></line></g><g><path d="M 72,40 A 4,4 0,0,0 68,44" class="nofill"></path><line x1="68" y1="44" x2="68" y2="52" class="solid"></line><line x1="72" y1="40" x2="96" y2="40" class="solid"></line><path d="M 96,40 A 4,4 0,0,1 100,44" class="nofill"></path><line x1="100" y1="44" x2="100" y2="52" class="solid"></line><path d="M 100,52 A 4,4 0,0,0 104,56" class="nofill"></path><line x1="104" y1="56" x2="112" y2="56" class="solid"></line><line x1="56" y1="56" x2="64" y2="56" class="solid"></line><path d="M 68,52 A 4,4 0,0,1 64,56" class="nofill"></path></g><g><path d="M 176,40 A 4,4 0,0,0 172,44" class="nofill"></path><line x1="172" y1="44" x2="172" y2="52" class="solid"></line><line x1="176" y1="40" x2="200" y2="40" class="solid"></line><path d="M 200,40 A 4,4 0,0,1 204,44" class="nofill"></path><line x1="204" y1="44" x2="204" y2="52" class="solid"></line><path d="M 204,52 A 4,4 0,0,0 208,56" class="nofill"></path><line x1="208" y1="56" x2="216" y2="56" class="solid"></line><line x1="160" y1="56" x2="168" y2="56" class="solid"></line><path d="M 172,52 A 4,4 0,0,1 168,56" class="nofill"></path></g></svg>
