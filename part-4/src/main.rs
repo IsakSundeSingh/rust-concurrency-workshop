@@ -11,11 +11,7 @@ fn main() {
 }
 
 fn assignment(x: Arc<Mutex<bool>>) {
-    thread::spawn(move || {
-        *x.lock().unwrap() = true;
-    })
-    .join()
-    .expect("Couldn't join thread");
+    todo!()
 }
 
 #[test]

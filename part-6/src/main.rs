@@ -8,8 +8,7 @@ fn rayon_parallel_calculate(data: Vec<Data>) -> Vec<ComputationResult> {
     // Use the rayon prelude and use the same calculate-method as before
     use part_5::calculate;
     use rayon::prelude::*;
-
-    data.into_par_iter().map(calculate).collect()
+    todo!()
 }
 
 #[cfg(test)]

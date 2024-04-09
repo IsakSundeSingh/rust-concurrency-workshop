@@ -7,9 +7,7 @@ fn main() {
 }
 
 fn across_the_border() -> std::sync::mpsc::Receiver<i32> {
-    let (tx, rx) = std::sync::mpsc::channel::<i32>();
-    std::thread::spawn(move || (0..10).for_each(|x| tx.send(x).expect("Couldn't send value")));
-    rx
+    todo!()
 }
 
 #[test]

@@ -8,18 +8,7 @@ fn main() {
 }
 
 fn producers() -> Receiver<i32> {
-    let (sender, receiver) = std::sync::mpsc::channel::<i32>();
-
-    (0..10).for_each(|x| {
-        // Clone the sender outside the thread scope
-        let sender = sender.clone();
-        std::thread::spawn(move || {
-            // So that the cloned sender can be moved into the thread, giving it ownership
-            sender.send(x).expect("Couldn't send message");
-        });
-    });
-
-    receiver
+    todo!()
 }
 
 #[test]
