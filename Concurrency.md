@@ -34,7 +34,9 @@ o-----------\-/----------\/-#
 - Sometimes things need to happen at the same time
 - Computer inputs and outputs cannot always wait
 - Sometimes you wait for external resources to finish, e.g. I/O
-- ***
+- Performance
+
+---
 
 # CPUs and concurrency
 
@@ -81,12 +83,18 @@ Core 2.   .-----------------# .--- >
 
 # Dangers of concurrency
 
+<style scoped>
+section {
+  font-size: 2rem
+}
+</style>
+
 #### Data hazards
 
 - Non-_atomic_ actions on shared data are unsafe to perform in a concurrent context
-- Read-after-write: **A** tries to read from store before **B** finishes writing to it
-- Write-after-read: **A** reads from store, update data, **B** writes to store, **A** writes, then data from **B** is overwritten
-- Write-after-write: **A** has updated data, writes it to store, but **B** wrote before **A** got the chance
+- Read-after-write (RAW): **A** tries to read from store before **B** finishes writing to it
+- Write-after-read (WAR): **A** reads from store, update data, **B** writes to store, **A** writes, then data from **B** is overwritten
+- Write-after-write (WAW): **A** has updated data, writes it to store, but **B** wrote before **A** got the chance
 
 ---
 
@@ -102,6 +110,12 @@ Core 2.   .-----------------# .--- >
 
 # Compile-time solutions
 
+<style scoped>
+section {
+  font-size: 2rem
+}
+</style>
+
 - Non-blocking algorithms: Failure or suspension of any thread cannot cause failure or suspension of another thread
   - Usually implemented through atomic CPU instructions such as compare-and-swap and clever algorithm design
   - Can be wait-free, lock-free or obstruction-free, ordered from greatest to weakest guarantees
@@ -111,6 +125,12 @@ Core 2.   .-----------------# .--- >
     - 👎 Very difficult to implement and may not always be possible
 
 ---
+
+<style scoped>
+section {
+  font-size: 2rem
+}
+</style>
 
 # Other solutions
 
@@ -195,6 +215,12 @@ where
 
 ---
 
+<style scoped>
+section {
+  font-size: 2rem
+}
+</style>
+
 # Scoped threads usage
 
 ```rust
@@ -225,3 +251,29 @@ You can still mess up, e.g. by deadlocking, etc.
 However, Rust markets itself with _fearless concurrency_:
 
 https://doc.rust-lang.org/book/ch16-00-concurrency.html
+
+---
+
+# "Simple" atomics
+
+- If you just need to perform simple integer (or other primitives) synchronization across threads, don't use `Mutex<i32>`, but [atomic primitives](https://doc.rust-lang.org/stable/std/sync/atomic/index.html):
+  - `AtomicBool`
+  - `AtomicI8`, `AtomicI16`, `AtomicI32`, `AtomicI64`, `AtomicIsize`
+  - `AtomicPtr`
+  - `AtomicU8`, `AtomicU16`, `AtomicU32`, `AtomicU64`, `AtomicUsize`
+- Lock-free implementations, as they use CPU-specific features
+
+---
+
+# Using atomic primitives
+
+Useful for e.g. creating a global counter across threads:
+
+```rust
+let atomic_counter = AtomicUsize::new(42);
+assert_eq!(atomic_counter.load(Ordering::Relaxed), 42);
+atomic_counter.store(10, Ordering::Relaxed);
+assert_eq!(atomic_counter.load(Ordering::Relaxed), 10);
+```
+
+Good resource on concurrency, atomics and explanation of _memory ordering_: https://marabos.nl/atomics/atomics.html
